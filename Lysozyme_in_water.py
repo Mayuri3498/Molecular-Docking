@@ -210,7 +210,7 @@ def equilibration():
     if nvt:
         logger.info("Running NVT simulation")
         try:
-            cmd = "gmx mdrun -deffnm nvt"
+            cmd = "gmx mdrun -deffnm nvt -nb gpu"
             process = Popen(cmd, shell=True, stdout=PIPE, stderr=STDOUT)
             output = process.communicate()[0].decode()
             logger.info(output)
@@ -259,7 +259,7 @@ def equilibration():
         if npt:
             logger.info("Running NPT Equilibration")
             try:
-                cmd = "gmx mdrun -deffnm npt"
+                cmd = "gmx mdrun -deffnm npt -nb gpu"
                 process = Popen(cmd, shell=True, stdout=PIPE, stderr=STDOUT)
                 output = process.communicate()[0].decode()
                 logger.info(output)
@@ -311,7 +311,7 @@ def md_simulation():
         logger.info("Running MD simulation")
         try:
             md_out = os.path.splitext(md_output)[0]
-            cmd = "gmx mdrun -deffnm " + md_out
+            cmd = "gmx mdrun -deffnm " + md_out + " -nb gpu"
             process = Popen(cmd, shell=True, stdout=PIPE, stderr=STDOUT)
             output = process.communicate()[0].decode()
             logger.info(output)
@@ -327,3 +327,4 @@ if __name__ == '__main__':
     energy_minimization()
     equilibration()
     md_simulation()
+
